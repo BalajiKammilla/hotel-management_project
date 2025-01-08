@@ -9,7 +9,7 @@ public class CustomerDetails {
 	private String countryCode;
 	private String address;
 	private String idProof;
-	private MaritalStatus maritalStatus;
+	private MaritalStatus maritalStatus = getMaritalStatus().NOTDEFINED;
 	
 	
 	public Long getId() {
