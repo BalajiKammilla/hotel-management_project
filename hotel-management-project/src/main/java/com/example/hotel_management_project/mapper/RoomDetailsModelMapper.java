@@ -1,9 +1,9 @@
-package mapper;
+package com.example.hotel_management_project.mapper;
 
 import org.modelmapper.ModelMapper;
 
-import dto.RoomDetails;
-import entity.RoomDetailsEntity;
+import com.example.hotel_management_project.dto.RoomDetails;
+import com.example.hotel_management_project.entity.RoomDetailsEntity;
 
 public class RoomDetailsModelMapper {
 	

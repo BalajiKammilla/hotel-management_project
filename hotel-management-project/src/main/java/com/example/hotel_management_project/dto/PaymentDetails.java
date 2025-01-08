@@ -1,34 +1,13 @@
-package entity;
+package com.example.hotel_management_project.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "payment_details")
-public class PaymentDetailsEntity {
+public class PaymentDetails {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name = "stay_days")
 	private Double stayDays;
-	
-	@Column(name ="total_price")
 	private Double totalPrice;
-	
-	@Column(name ="payment_method")
-	@Enumerated
 	private PaymentMethod paymentMethod;
-	
-	@Column(name = "payment_status")
-	@Enumerated
 	private PaymentStatus paymentStatus;
+	
 	
 	
 	public Long getId() {
@@ -63,8 +42,8 @@ public class PaymentDetailsEntity {
 	}
 	@Override
 	public String toString() {
-		return "PaymentDetailsEntity [id=" + id + ", stayDays=" + stayDays + ", totalPrice=" + totalPrice
-				+ ", paymentMethod=" + paymentMethod + ", paymentStatus=" + paymentStatus + "]";
+		return "PaymentDetails [id=" + id + ", stayDays=" + stayDays + ", totalPrice=" + totalPrice + ", paymentMethod="
+				+ paymentMethod + ", paymentStatus=" + paymentStatus + "]";
 	}
 	
 	

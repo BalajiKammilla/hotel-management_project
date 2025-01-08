@@ -1,9 +1,9 @@
-package mapper;
+package com.example.hotel_management_project.mapper;
 
 import org.modelmapper.ModelMapper;
 
-import dto.PaymentDetails;
-import entity.PaymentDetailsEntity;
+import com.example.hotel_management_project.dto.PaymentDetails;
+import com.example.hotel_management_project.entity.PaymentDetailsEntity;
 
 
 public class PaymentDetailsModelMapper {
