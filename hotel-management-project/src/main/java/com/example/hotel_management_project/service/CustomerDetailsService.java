@@ -44,5 +44,27 @@ public class CustomerDetailsService {
         return customerRepository.save(entity);
     }
 	
+	public CustomerDetailsEntity updateDetails(Long id, CustomerDetails custDetails) {
+		
+	      CustomerDetailsEntity existingEntity = customerRepository.findById(id)
+	              .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
+	      
+	      existingEntity.setCustomerName(custDetails.getCustomerName());
+	      existingEntity.setAddress(custDetails.getAddress());
+	      existingEntity.setCountryCode(custDetails.getCountryCode());
+	      existingEntity.setAge(custDetails.getAge());
+	      existingEntity.setIdProof(custDetails.getIdProof());
+	      existingEntity.setMobileNumber(custDetails.getMobileNumber());
+	      
+	      return customerRepository.save(existingEntity);
+	}
+	
+	
+	public void deleteCustomer(Long id) {
+		if(!customerRepository.existsById(id)) {
+			throw new RuntimeException("Customer not found with id"+id);
+		}
+		customerRepository.deleteById(id);
+	}
 
 }

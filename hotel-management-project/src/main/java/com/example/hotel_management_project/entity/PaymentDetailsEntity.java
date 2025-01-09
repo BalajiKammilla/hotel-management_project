@@ -2,6 +2,7 @@ package com.example.hotel_management_project.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,11 +24,11 @@ public class PaymentDetailsEntity {
 	private Double totalPrice;
 	
 	@Column(name ="payment_method")
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private PaymentMethod paymentMethod;
 	
 	@Column(name = "payment_status")
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private PaymentStatus paymentStatus;
 	
 	

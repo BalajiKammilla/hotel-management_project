@@ -5,9 +5,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,5 +45,17 @@ public class CustomerDetailsResource {
 	public ResponseEntity<CustomerDetailsEntity> saveDetails(@RequestBody CustomerDetails details) {
 	    CustomerDetailsEntity savedEntity = customerDetailsService.saveDetails(details);
 	    return ResponseEntity.status(200).body(savedEntity); 
+	}
+	
+	@PutMapping("/update/{id}")
+	public ResponseEntity<CustomerDetailsEntity> upadteDetails(@PathVariable Long id, @RequestBody CustomerDetails details){
+		CustomerDetailsEntity updatedEntity = customerDetailsService.updateDetails(id, details);
+		return ResponseEntity.ok(updatedEntity);
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<CustomerDetailsEntity> deleteById(@PathVariable Long id){
+		customerDetailsService.deleteCustomer(id);
+		return ResponseEntity.noContent().build();
 	}
 }
