@@ -70,9 +70,7 @@ public class CustomerDetails {
 				+ ", getAddress()=" + getAddress() + ", getIdProof()=" + getIdProof() + ", getMaritalStatus()="
 				+ getMaritalStatus() + ", getCountryCode()=" + getCountryCode() + ", getClass()=" + getClass()
 				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
-	}
-	
-	
+	}	
 }
 
 enum MaritalStatus {
