@@ -11,5 +11,5 @@ import com.example.hotel_management_project.entity.CustomerDetailsEntity;
 public interface CustomerRepository extends JpaRepository<CustomerDetailsEntity, Long>  {
 	
 		List<CustomerDetailsEntity> getCustomerDetailsByCustomerName(String customerName);
-		
+		boolean existsByMobileNumber(String mobileNumber);
 }

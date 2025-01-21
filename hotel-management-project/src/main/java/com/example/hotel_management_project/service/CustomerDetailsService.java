@@ -45,8 +45,14 @@ public class CustomerDetailsService {
 		if(customerDetails.getCustomerName() == null || customerDetails.getCustomerName().isEmpty() && customerDetails.getCustomerName().length() >= 10) {
 			throw new ValidationException("Customer Name cannot be null or empty and less than 10 charcters ");
 		}
+		if(!customerDetails.getCustomerName().matches("[A-Za-z\\s]+")) {
+			throw new ValidationException("CustomerName can only contain alphabets and spaces");
+		}
 		if(customerDetails.getAddress() == null || customerDetails.getAddress().isEmpty()) {
 			throw new ValidationException("Address cannot be null or empty");
+		}
+		if(customerDetails.getAddress().length() > 255) {
+			throw new ValidationException("Address cannot exceed 255 charcters");
 		}
 		if(customerDetails.getAge() <= 0) {
 			throw new ValidationException("Age must be greater than 0");
@@ -57,8 +63,11 @@ public class CustomerDetailsService {
 		if(customerDetails.getIdProof() == null || customerDetails.getIdProof().isEmpty()) {
 			throw new ValidationException("IdProof cannot be null or empty");
 		}
-		if(customerDetails.getMobileNumber() == null || !customerDetails.getMobileNumber().matches("\\d{10}")) {
-			throw new ValidationException("Invalid MobileNumber, It should conatain 10 digits");
+		if(customerDetails.getMobileNumber().equals("+91") && customerDetails.getMobileNumber() == null || !customerDetails.getMobileNumber().matches("\\d{10}")) {
+			throw new ValidationException("Invalid MobileNumber, Indian mobileNumbers should conatain 10 digits");
+		}
+		if(customerRepository.existsByMobileNumber(customerDetails.getMobileNumber())) {
+			throw new ValidationException("Mobile number already exists");
 		}
 		
         CustomerDetailsEntity entity = new CustomerDetailsEntity();

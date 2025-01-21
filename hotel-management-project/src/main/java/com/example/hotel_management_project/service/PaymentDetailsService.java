@@ -19,9 +19,11 @@ public class PaymentDetailsService {
 	private PaymentRepository paymentRepository;
 	
 	public Optional<PaymentDetailsEntity> getPaymentDetailsById(Long id) {
+		
 		if(id == null || id <= 0) {
 			throw new ValidationException("Id must be greater than 0");
 		}
+		
 		return paymentRepository.findById(id);
 	}
 	
@@ -37,12 +39,11 @@ public class PaymentDetailsService {
 	}
 	
 	public PaymentDetailsEntity saveDetails(PaymentDetails payDetails) {
-//		if(payDetails.getId() == null || payDetails.getId()<= 0) {
-//			throw new ValidationException("Id must be greater than 0");
-//		}
+		
 		if(payDetails.getStayDays() == null || payDetails.getStayDays() <= 0) {
 			throw new ValidationException("StayDays cannot be less than 0");
 		}
+		
 		PaymentDetailsEntity entity = new PaymentDetailsEntity();
 		entity.setId(payDetails.getId());
 		entity.setStayDays(payDetails.getStayDays());
