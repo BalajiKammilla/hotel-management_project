@@ -9,6 +9,8 @@ import com.example.hotel_management_project.dto.RoomDetails;
 import com.example.hotel_management_project.entity.RoomDetailsEntity;
 import com.example.hotel_management_project.repositoryPl.RoomRepository;
 
+import jakarta.validation.ValidationException;
+
 @Service
 public class RoomDetailsService {
 	
@@ -17,6 +19,9 @@ public class RoomDetailsService {
 	
 	
 	public Optional<RoomDetailsEntity> getRoomDetailsById(Long id) {
+		if(id == null || id <= 0) {
+			throw new ValidationException("Id should be greater than 0");
+		}
 		return roomRepository.findById(id);
 	}
 	
@@ -29,6 +34,19 @@ public class RoomDetailsService {
 	}
 	
 	public RoomDetailsEntity saveDetails(RoomDetails roomDetails) {
+		
+		if(roomDetails.getRoomNo() == null) {
+			throw new ValidationException("RoomNo cannot be null");
+		}
+		if(roomDetails.getIdProofType() == null || roomDetails.getIdProofType().isEmpty()) {
+			throw new ValidationException("Id proof cannot be null or empty");
+		}
+		if(roomDetails.getCheckInType() == null || roomDetails.getCheckInType().isEmpty()) {
+			throw new ValidationException("CheckInType cannot be null or empty");
+		}
+		if(roomDetails.getCheckoutTime() == null) {
+			throw new ValidationException("Checkout Time cannot be null");
+		}
 	
 		RoomDetailsEntity entity = new RoomDetailsEntity();
 		entity.setRoomNo(roomDetails.getRoomNo());

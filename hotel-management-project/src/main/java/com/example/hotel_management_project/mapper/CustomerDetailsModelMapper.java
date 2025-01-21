@@ -3,9 +3,7 @@ package com.example.hotel_management_project.mapper;
 import org.modelmapper.ModelMapper;
 
 import com.example.hotel_management_project.dto.CustomerDetails;
-import com.example.hotel_management_project.dto.RoomDetails;
 import com.example.hotel_management_project.entity.CustomerDetailsEntity;
-import com.example.hotel_management_project.entity.RoomDetailsEntity;
 
 public class CustomerDetailsModelMapper {
 	

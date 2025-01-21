@@ -5,8 +5,8 @@ public class PaymentDetails {
 	private Long id;
 	private Double stayDays;
 	private Double totalPrice;
-	private PaymentMethod paymentMethod = getPaymentMethod().CASH;
-	private PaymentStatus paymentStatus = getPaymentStatus().FAILED;
+	private PaymentMethod paymentMethod = PaymentMethod.CASH;
+	private PaymentStatus paymentStatus = PaymentStatus.FAILED;
 	
 	
 	public Long getId() {

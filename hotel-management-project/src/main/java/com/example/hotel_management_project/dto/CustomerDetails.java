@@ -1,5 +1,6 @@
 package com.example.hotel_management_project.dto;
 
+
 public class CustomerDetails {
 	
 	private Long id;
@@ -9,7 +10,7 @@ public class CustomerDetails {
 	private String countryCode;
 	private String address;
 	private String idProof;
-	private MaritalStatus maritalStatus = getMaritalStatus().NOTDEFINED;
+	private MaritalStatus maritalStatus = MaritalStatus.NOTDEFINED;
 	
 	
 	public Long getId() {

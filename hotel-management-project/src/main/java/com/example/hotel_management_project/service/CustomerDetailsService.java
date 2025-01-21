@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.hotel_management_project.dto.CustomerDetails;
 import com.example.hotel_management_project.entity.CustomerDetailsEntity;
+import com.example.hotel_management_project.exception.ValidationException;
 import com.example.hotel_management_project.repositoryPl.CustomerRepository;
 
 @Service
@@ -18,6 +19,10 @@ public class CustomerDetailsService {
 	
 	
 	public Optional<CustomerDetailsEntity> getCustomerDetailsById(Long id) {
+		
+		if(id == null || id <= 0) {
+			throw new ValidationException("Invalid Id, ID must be positive number");
+		}
 		return customerRepository.findById(id);
 	}
 	
@@ -27,19 +32,42 @@ public class CustomerDetailsService {
 	
 	
 	public List<CustomerDetailsEntity> getCustomersByName(String customerName) {
+		if(customerName == null || customerName.isEmpty()) {
+			throw new ValidationException("CustomerName cannot be null or empty");
+		}
+		
 		return customerRepository.getCustomerDetailsByCustomerName(customerName);
 	}
 	
 	
-	public CustomerDetailsEntity saveDetails(CustomerDetails custDetails) {
- 
+	public CustomerDetailsEntity saveDetails(CustomerDetails customerDetails) {
+		
+		if(customerDetails.getCustomerName() == null || customerDetails.getCustomerName().isEmpty() && customerDetails.getCustomerName().length() >= 10) {
+			throw new ValidationException("Customer Name cannot be null or empty and less than 10 charcters ");
+		}
+		if(customerDetails.getAddress() == null || customerDetails.getAddress().isEmpty()) {
+			throw new ValidationException("Address cannot be null or empty");
+		}
+		if(customerDetails.getAge() <= 0) {
+			throw new ValidationException("Age must be greater than 0");
+		}
+		if(customerDetails.getCountryCode() == null || customerDetails.getCountryCode().isEmpty()) {
+			throw new ValidationException("Country code cannot be null or empty");
+		}
+		if(customerDetails.getIdProof() == null || customerDetails.getIdProof().isEmpty()) {
+			throw new ValidationException("IdProof cannot be null or empty");
+		}
+		if(customerDetails.getMobileNumber() == null || !customerDetails.getMobileNumber().matches("\\d{10}")) {
+			throw new ValidationException("Invalid MobileNumber, It should conatain 10 digits");
+		}
+		
         CustomerDetailsEntity entity = new CustomerDetailsEntity();
-        entity.setCustomerName(custDetails.getCustomerName());
-        entity.setAge(custDetails.getAge());
-        entity.setAddress(custDetails.getAddress());
-        entity.setCountryCode(custDetails.getCountryCode());
-        entity.setIdProof(custDetails.getIdProof());
-        entity.setMobileNumber(custDetails.getMobileNumber());
+        entity.setCustomerName(customerDetails.getCustomerName());
+        entity.setAge(customerDetails.getAge());
+        entity.setAddress(customerDetails.getAddress());
+        entity.setCountryCode(customerDetails.getCountryCode());
+        entity.setIdProof(customerDetails.getIdProof());
+        entity.setMobileNumber(customerDetails.getMobileNumber());
      
         return customerRepository.save(entity);
     }
