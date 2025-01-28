@@ -19,7 +19,7 @@ import com.example.hotel_management_project.entity.PaymentDetailsEntity;
 import com.example.hotel_management_project.service.PaymentDetailsService;
 
 @RestController
-@RequestMapping("/payment")
+@RequestMapping("/api/payment")
 public class PaymentDetailsResource {
 	
 	@Autowired

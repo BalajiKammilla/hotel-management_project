@@ -18,14 +18,17 @@ import com.example.hotel_management_project.dto.CustomerDetails;
 import com.example.hotel_management_project.entity.CustomerDetailsEntity;
 import com.example.hotel_management_project.service.CustomerDetailsService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/api/customer")
 public class CustomerDetailsResource {
 	
 	@Autowired
 	private CustomerDetailsService customerDetailsService;
 	
+	@Operation(summary = "Get CustomerDetails By Id")
 	@GetMapping("/details/{id}")
 	public Optional<CustomerDetailsEntity> findDetailsById(@PathVariable Long id) {
 		return customerDetailsService.getCustomerDetailsById(id);

@@ -19,7 +19,7 @@ import com.example.hotel_management_project.entity.RoomDetailsEntity;
 import com.example.hotel_management_project.service.RoomDetailsService;
 
 @RestController
-@RequestMapping("/room")
+@RequestMapping("/api/room")
 public class RoomDetailsResource {
 	
 	@Autowired

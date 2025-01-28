@@ -15,7 +15,7 @@ class HotelManagementProjectApplicationTests {
 
 	@Test
 	void contextLoads() {
-//		 assertThat(customerDetailsService).isNotNull();
+		assertThat(customerDetailsService).isNotNull();
 	}
 	
     @Autowired
@@ -25,20 +25,21 @@ class HotelManagementProjectApplicationTests {
     void testSaveDetails_Success() {
         // Prepare test data
         CustomerDetails customerDetails = new CustomerDetails();
-        customerDetails.setCustomerName("ROB");
+        customerDetails.setCustomerName("John Roy");
         customerDetails.setAge(30);
-        customerDetails.setMobileNumber("9876543210");
-        customerDetails.setCountryCode("+91");
         customerDetails.setAddress("123 Main Street");
+        customerDetails.setCountryCode("+91");
+        customerDetails.setMobileNumber("9876543210");
         customerDetails.setIdProof("A123456789");
-
+        
+       
         // Save details
         CustomerDetailsEntity savedEntity = customerDetailsService.saveDetails(customerDetails);
 
         // Assertions
         assertThat(savedEntity).isNotNull();
         assertThat(savedEntity.getId()).isNotNull();
-        assertThat(savedEntity.getCustomerName()).isEqualTo("ROB");
+        assertThat(savedEntity.getCustomerName()).isEqualTo("John Roy");
     }
 
 }

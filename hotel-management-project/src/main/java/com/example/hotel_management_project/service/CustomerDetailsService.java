@@ -10,6 +10,8 @@ import com.example.hotel_management_project.dto.CustomerDetails;
 import com.example.hotel_management_project.entity.CustomerDetailsEntity;
 import com.example.hotel_management_project.exception.ValidationException;
 import com.example.hotel_management_project.repositoryPl.CustomerRepository;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 @Service
 public class CustomerDetailsService {
@@ -43,6 +45,7 @@ public class CustomerDetailsService {
 	public CustomerDetailsEntity saveDetails(CustomerDetails customerDetails) {
 		
 		CustomerDetailsValidations(customerDetails);
+//		PhoneNumberValidation(customerDetails);
 		
         CustomerDetailsEntity entity = new CustomerDetailsEntity();
         entity.setCustomerName(customerDetails.getCustomerName());
@@ -55,9 +58,23 @@ public class CustomerDetailsService {
         return customerRepository.save(entity);
     }
 
+	/*private void PhoneNumberValidation(CustomerDetails customerDetails) {
+		try {
+	        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
+	        PhoneNumber phoneNumber = phoneNumberUtil.parse(customerDetails.getMobileNumber(), customerDetails.getCountryCode());
+	        
+	        if (!phoneNumberUtil.isValidNumber(phoneNumber)) {
+	            throw new ValidationException("Invalid MobileNumber for the specified country");
+	        }
+	    } catch (Exception e) {
+	        throw new ValidationException("Invalid MobileNumber format or country code");
+	    }
+	}*/
+	
 	private void CustomerDetailsValidations(CustomerDetails customerDetails) {
-		if(customerDetails.getCustomerName() == null || customerDetails.getCustomerName().isEmpty() && customerDetails.getCustomerName().length() >= 10) {
-			throw new ValidationException("Customer Name cannot be null or empty and less than 10 charcters ");
+		
+		if(customerDetails.getCustomerName() == null || customerDetails.getCustomerName().isEmpty() && customerDetails.getCustomerName().length() >= 50) {
+			throw new ValidationException("Customer Name cannot be null or empty and less than 50 charcters ");
 		}
 		if(!customerDetails.getCustomerName().matches("[A-Za-z\\s]+")) {
 			throw new ValidationException("CustomerName can only contain alphabets and spaces");

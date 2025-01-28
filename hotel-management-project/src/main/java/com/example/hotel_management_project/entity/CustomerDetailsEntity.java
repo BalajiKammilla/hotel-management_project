@@ -18,25 +18,25 @@ public class CustomerDetailsEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "customerName")
+	@Column(name = "customer_name")
 	private String customerName;
 	
 	@Column(name = "age")
 	private int age;
 	
-	@Column(name = "mobileNumber")
+	@Column(name = "mobile_number")
 	private String mobileNumber;
 	
-	@Column(name = "countryCode")
+	@Column(name = "country_code")
 	private String countryCode;
 	
 	@Column(name = "address")
 	private String address;
 	
-	@Column(name = "idProof")
+	@Column(name = "id_proof")
 	private String idProof;
 	
-	@Column(name = "maritalStatus")
+	@Column(name = "marital_status")
 	@Enumerated(EnumType.STRING)
 	private MaritalStatus maritalStatus;
 	
