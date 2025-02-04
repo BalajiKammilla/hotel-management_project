@@ -18,25 +18,28 @@ public class CustomerDetailsEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "customer_name")
+	@Column(name = "customerName")
 	private String customerName;
 	
 	@Column(name = "age")
 	private int age;
 	
-	@Column(name = "mobile_number")
+	@Column(name = "mobileNumber")
 	private String mobileNumber;
 	
-	@Column(name = "country_code")
+	@Column(name = "password")
+	private String password;
+	
+	@Column(name = "countryCode")
 	private String countryCode;
 	
 	@Column(name = "address")
 	private String address;
 	
-	@Column(name = "id_proof")
+	@Column(name = "idProof")
 	private String idProof;
 	
-	@Column(name = "marital_status")
+	@Column(name = "maritalStatus")
 	@Enumerated(EnumType.STRING)
 	private MaritalStatus maritalStatus;
 	
@@ -54,7 +57,6 @@ public class CustomerDetailsEntity {
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-
 	public int getAge() {
 		return age;
 	}
@@ -67,7 +69,12 @@ public class CustomerDetailsEntity {
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
-	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getCountryCode() {
 		return countryCode;
 	}
@@ -92,13 +99,13 @@ public class CustomerDetailsEntity {
 	public void setMaritalStatus(MaritalStatus maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
+	
 	@Override
 	public String toString() {
 		return "CustomerDetailsEntity [id=" + id + ", customerName=" + customerName + ", age=" + age + ", mobileNumber="
-				+ mobileNumber + ", countryCode=" + countryCode + ", address=" + address + ", idProof=" + idProof
-				+ ", maritalStatus=" + maritalStatus + "]";
+				+ mobileNumber + ", password=" + password + ", countryCode=" + countryCode + ", address=" + address
+				+ ", idProof=" + idProof + ", maritalStatus=" + maritalStatus + "]";
 	}
-		
 	
 }
 

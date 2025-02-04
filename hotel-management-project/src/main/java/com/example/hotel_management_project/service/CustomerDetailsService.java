@@ -4,12 +4,17 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.hotel_management_project.dto.CustomerDetails;
 import com.example.hotel_management_project.entity.CustomerDetailsEntity;
 import com.example.hotel_management_project.exception.ValidationException;
 import com.example.hotel_management_project.repositoryPl.CustomerRepository;
+import com.example.hotel_management_project.securityConfig.JWTService;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
@@ -17,10 +22,17 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 public class CustomerDetailsService {
 	
 	@Autowired
+	private JWTService jwtService;
+	
+	@Autowired
 	private CustomerRepository customerRepository;
 	
+	@Autowired
+	private AuthenticationManager authManager;
 	
-	public Optional<CustomerDetailsEntity> getCustomerDetailsById(Long id) {
+	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+	
+	 public Optional<CustomerDetailsEntity> getCustomerDetailsById(Long id) {
 		
 		if(id == null || id <= 0) {
 			throw new ValidationException("Invalid Id, ID must be positive number");
@@ -54,6 +66,7 @@ public class CustomerDetailsService {
         entity.setCountryCode(customerDetails.getCountryCode());
         entity.setIdProof(customerDetails.getIdProof());
         entity.setMobileNumber(customerDetails.getMobileNumber());
+        entity.setPassword(encoder.encode(customerDetails.getPassword()));
      
         return customerRepository.save(entity);
     }
@@ -123,6 +136,14 @@ public class CustomerDetailsService {
 			throw new RuntimeException("Customer not found with id"+id);
 		}
 		customerRepository.deleteById(id);
+	}
+	
+	public String VerifyCustomer(CustomerDetails details) {
+		Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(details.getCustomerName(),details.getPassword()));
+		if(authentication.isAuthenticated()) {
+			return jwtService.generateToken(details.getCustomerName());
+		}	
+		return "failed verification";
 	}
 
 }

@@ -25,6 +25,11 @@ public class PaymentDetailsResource {
 	@Autowired
 	private PaymentDetailsService paymentDetailsService;
 	
+	@GetMapping("/check")
+	public String getString() {
+		return "Payment Resource";
+	}
+	
 	@GetMapping("/details/{id}")
 	public Optional<PaymentDetailsEntity> getpaymentDetialsById(@PathVariable Long id) {
 		return paymentDetailsService.getPaymentDetailsById(id);

@@ -25,6 +25,11 @@ public class RoomDetailsResource {
 	@Autowired
 	private RoomDetailsService roomDetailsService;
 	
+	@GetMapping("/check")
+	public String getString() {
+		return "RoomDetails Resource";
+	}
+	
 	@GetMapping("/details/{id}")
 	public Optional<RoomDetailsEntity> findById(@PathVariable Long id) {
 		return roomDetailsService.getRoomDetailsById(id);

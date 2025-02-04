@@ -19,6 +19,7 @@ import com.example.hotel_management_project.entity.CustomerDetailsEntity;
 import com.example.hotel_management_project.service.CustomerDetailsService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.websocket.server.PathParam;
 
 
 @RestController
@@ -27,6 +28,12 @@ public class CustomerDetailsResource {
 	
 	@Autowired
 	private CustomerDetailsService customerDetailsService;
+	
+	@GetMapping("/check")
+	public String getString() {
+		return "Customer Resource";
+	}
+	
 	
 	@Operation(summary = "Get CustomerDetails By Id")
 	@GetMapping("/details/{id}")
@@ -38,16 +45,22 @@ public class CustomerDetailsResource {
 	public List<CustomerDetailsEntity> findDetailsByCustomerName(@PathVariable String customerName) {
 		return customerDetailsService.getCustomersByName(customerName);
 	}
+	
 	@GetMapping
 	public ResponseEntity<List<CustomerDetailsEntity>> findAllDetails() {
 		List<CustomerDetailsEntity> customers = customerDetailsService.getAllCustomers();
 		return ResponseEntity.ok(customers);
 	}
 
-	@PostMapping("/save")
-	public ResponseEntity<CustomerDetailsEntity> saveDetails(@RequestBody CustomerDetails details) {
+	@PostMapping("/register")
+	public ResponseEntity<CustomerDetailsEntity> register(@RequestBody CustomerDetails details) {
 	    CustomerDetailsEntity savedEntity = customerDetailsService.saveDetails(details);
 	    return ResponseEntity.status(200).body(savedEntity); 
+	}
+	
+	@PostMapping("/login")
+	public String customerLogin(@RequestBody CustomerDetails details) {
+		return customerDetailsService.VerifyCustomer(details);
 	}
 	
 	@PutMapping("/update/{id}")
