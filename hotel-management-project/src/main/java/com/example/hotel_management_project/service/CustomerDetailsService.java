@@ -1,7 +1,10 @@
 package com.example.hotel_management_project.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,8 +18,8 @@ import com.example.hotel_management_project.entity.CustomerDetailsEntity;
 import com.example.hotel_management_project.exception.ValidationException;
 import com.example.hotel_management_project.repositoryPl.CustomerRepository;
 import com.example.hotel_management_project.securityConfig.JWTService;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+//import com.google.i18n.phonenumbers.PhoneNumberUtil;
+//import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 @Service
 public class CustomerDetailsService {
@@ -29,6 +32,8 @@ public class CustomerDetailsService {
 	
 	@Autowired
 	private AuthenticationManager authManager;
+	
+	private Map<String, String> otpStore = new HashMap<String, String>();
 	
 	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 	
@@ -145,5 +150,44 @@ public class CustomerDetailsService {
 		}	
 		return "failed verification";
 	}
+	
+//	<!--To Generate and verify Otp to change password in case of forget password -->
+	
+	public String generateOtp() {
+		Random random = new Random();
+		int otp = 100000 + random.nextInt(90000);
+		return String.valueOf(otp);
+	}
+	
+	public String sendOtp(String mobileNumber) {
+		Optional<CustomerDetailsEntity> customer = customerRepository.findByMobileNumber(mobileNumber);
+		if(customer.isEmpty()) {
+			throw new RuntimeException("Mobile Number Not Found");
+		}
+		
+		String otp = generateOtp();
+		otpStore.put(mobileNumber, otp);
+		System.out.println("OTP sent to "+ mobileNumber +":"+ otp);
+		return "OTP sent Successfully";
+	}
+	
+	
+	public String resetPassword(String mobileNumber, String otp, String newPassword) {
+	
+		if(!otpStore.containsKey(mobileNumber) || !otpStore.get(mobileNumber).equals(otp)) {
+			throw new RuntimeException("Invalid OTP !");
+		}
+		
+		CustomerDetailsEntity customer = customerRepository.findByMobileNumber(mobileNumber)
+				.orElseThrow(() -> new RuntimeException("Mobile Number Not Found"));
+		
+		customer.setPassword(encoder.encode(newPassword));
+		customerRepository.save(customer);
+		
+		otpStore.remove(mobileNumber);
+		
+		return "Password reset Successfully !";
+	}
+	
 
 }

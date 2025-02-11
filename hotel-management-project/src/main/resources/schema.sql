@@ -35,7 +35,7 @@ CREATE TABLE payment_details (
 
 INSERT INTO customer_details (customerName, age, mobileNumber, password, countryCode, address, idProof, maritalStatus)
 VALUES 
-    ('John Doe', 30, '1234567890', 'j@123', 'IN', '123 Main St, City', 'Aadhar123', 'MARRIED');
+    ('John Doe', 30, '1234567890', '$2a$12$dS2C9SD1jAzVLQNABmefpeGgVvLEt3BBjGTjCWplakL/UwsS3y.2.', 'IN', '123 Main St, City', 'Aadhar123', 'MARRIED');
 
 INSERT INTO room_details (roomNo, roomType, roomStatus, price, checkInType, idProofType, checkoutTime)
 VALUES

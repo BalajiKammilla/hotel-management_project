@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hotel_management_project.dto.CustomerDetails;
@@ -73,5 +74,20 @@ public class CustomerDetailsResource {
 	public ResponseEntity<CustomerDetailsEntity> deleteById(@PathVariable Long id){
 		customerDetailsService.deleteCustomer(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@PostMapping("/send-otp")
+	public ResponseEntity<String> sendOtp(@PathParam(value = "mobileNUmber") String mobileNumber){
+		String response = customerDetailsService.sendOtp(mobileNumber);
+		return ResponseEntity.ok(response);
+	}
+	
+	@PostMapping("/resetPassword")
+    public ResponseEntity<String> resetPassword(
+            @RequestParam String mobileNumber,
+            @RequestParam String otp,
+            @RequestParam String newPassword) {
+        String response = customerDetailsService.resetPassword(mobileNumber, otp, newPassword);
+        return ResponseEntity.ok(response);
 	}
 }

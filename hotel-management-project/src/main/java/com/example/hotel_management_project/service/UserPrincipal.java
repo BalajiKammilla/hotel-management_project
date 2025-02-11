@@ -19,7 +19,7 @@ public class UserPrincipal implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.singleton(new SimpleGrantedAuthority("CUSTOMER"));
+		return Collections.singleton(new SimpleGrantedAuthority("CUSTOMER")); //to define the roles or authorities 
 	}
 
 	@Override
@@ -31,6 +31,7 @@ public class UserPrincipal implements UserDetails {
 	public String getUsername() {
 		return customer.getCustomerName();
 	}
+	
 	@Override
 	public boolean isAccountNonExpired() {
 	    return true; // Assuming the account is always active
