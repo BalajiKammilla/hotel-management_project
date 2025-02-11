@@ -33,7 +33,7 @@ public class CustomerDetailsService {
 	@Autowired
 	private AuthenticationManager authManager;
 	
-	private Map<String, String> otpStore = new HashMap<String, String>();
+	private Map<String, String> otpStore = new HashMap();
 	
 	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 	
@@ -153,7 +153,7 @@ public class CustomerDetailsService {
 	
 //	<!--To Generate and verify Otp to change password in case of forget password -->
 	
-	public String generateOtp() {
+	/*public String generateOtp() {
 		Random random = new Random();
 		int otp = 100000 + random.nextInt(90000);
 		return String.valueOf(otp);
@@ -187,7 +187,7 @@ public class CustomerDetailsService {
 		otpStore.remove(mobileNumber);
 		
 		return "Password reset Successfully !";
-	}
+	}*/
 	
 
 }

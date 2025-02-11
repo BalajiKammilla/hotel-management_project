@@ -18,6 +18,9 @@ import com.example.hotel_management_project.dto.PaymentDetails;
 import com.example.hotel_management_project.entity.PaymentDetailsEntity;
 import com.example.hotel_management_project.service.PaymentDetailsService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Payment Details")
 @RestController
 @RequestMapping("/api/payment")
 public class PaymentDetailsResource {

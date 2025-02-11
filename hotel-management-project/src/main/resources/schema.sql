@@ -11,7 +11,7 @@ CREATE TABLE customer_details (
     countryCode VARCHAR(5) NOT NULL,
     address VARCHAR(255) NOT NULL,
     idProof VARCHAR(50) NOT NULL,
-    maritalStatus VARCHAR(20) NOT NULL
+    maritalStatus VARCHAR(20)
 );
 
 CREATE TABLE room_details (
