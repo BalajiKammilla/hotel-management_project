@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hotel_management_project.dto.CustomerDetails;
@@ -23,16 +22,18 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.websocket.server.PathParam;
 
 @Tag(name = "Customer Details")
 @RestController
-@RequestMapping("customer")
+@RequestMapping("/customer")
 public class CustomerDetailsResource {
+	
+	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CustomerDetailsResource.class);
 	
 	@Autowired
 	private CustomerDetailsService customerDetailsService;
 	
+
 	@GetMapping("/check")
 	public String getString() {
 		return "Customer Resource";
@@ -51,9 +52,19 @@ public class CustomerDetailsResource {
         })
 	@GetMapping("/details/{id}")
 	public Optional<CustomerDetailsEntity> findDetailsById(@PathVariable Long id) {
+    	logger.info("INFO:customer details by id are fectched successfully");
 		return customerDetailsService.getCustomerDetailsById(id);
 	}
 	
+    @Operation(
+    		summary = "Retreives the customer details with CustomerID ",
+    		description = "Fetches the the cutomer details using unique reference customerID if found")
+    @GetMapping("/detail/{customerID}")
+    public Optional<CustomerDetailsEntity> getDetailsByCustomerID(@PathVariable String customerID){
+    	 logger.info("INFO:customer details by cutomer id are fetched successfully");
+    	return customerDetailsService.getByCustomerID(customerID);
+    }
+    
     @Operation(
     		summary = "Retreives CustomerDetails By CustomerName",
     		description = "Fetches customer's details using the particular customer name if found")
@@ -64,6 +75,7 @@ public class CustomerDetailsResource {
     })
 	@GetMapping("/{customerName}")
 	public List<CustomerDetailsEntity> findDetailsByCustomerName(@PathVariable String customerName) {
+    	logger.info("INFO:customer's details are retrieved by customer name successfully");
 		return customerDetailsService.getCustomersByName(customerName);
 	}
 	
@@ -78,6 +90,7 @@ public class CustomerDetailsResource {
 	@GetMapping
 	public ResponseEntity<List<CustomerDetailsEntity>> findAllDetails() {
 		List<CustomerDetailsEntity> customers = customerDetailsService.getAllCustomers();
+		logger.info("INFO:successfully retrieved all customers details exist in database");
 		return ResponseEntity.ok(customers);
 	}
 
@@ -94,6 +107,7 @@ public class CustomerDetailsResource {
 	@PostMapping("/register")
 	public ResponseEntity<CustomerDetailsEntity> register(@RequestBody CustomerDetails details) {
 	    CustomerDetailsEntity savedEntity = customerDetailsService.saveDetails(details);
+	    logger.info("INFO:customer details are saved successfully");
 	    return ResponseEntity.status(200).body(savedEntity); 
 	}
 	
@@ -108,22 +122,24 @@ public class CustomerDetailsResource {
     })   
 	@PostMapping("/login")
 	public String customerLogin(@RequestBody CustomerDetails details) {
+    	logger.info("INFO:customername and password is verified and cretaed Bearer Token");
 		return customerDetailsService.VerifyCustomer(details);
 	}
 	
     
     @Operation(
-    		summary = "Update The CustomerDetails By Id",
-    		description = "Alter and update customer's details by Id")
+    		summary = "Update The CustomerDetails By customerId",
+    		description = "Alter and update customer's details by CustomerId")
     @ApiResponses({
     	@ApiResponse(responseCode = "200", description = "Customer details updated successfully"),
     	@ApiResponse(responseCode = "401", description = "Customer ID not found"),
         @ApiResponse(responseCode = "404", description = "Customer not found"),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })  
-	@PutMapping("/update/{id}")
-	public ResponseEntity<CustomerDetailsEntity> upadteDetails(@PathVariable Long id, @RequestBody CustomerDetails details){
-		CustomerDetailsEntity updatedEntity = customerDetailsService.updateDetails(id, details);
+	@PutMapping("/update/{customerid}")
+	public ResponseEntity<CustomerDetailsEntity> upadteDetails(@PathVariable String customerID, @RequestBody CustomerDetails details){
+		CustomerDetailsEntity updatedEntity = customerDetailsService.updateDetails(customerID, details);
+		logger.info("INFO:successfully updated customer details");
 		return ResponseEntity.ok(updatedEntity);
 	}
 
@@ -140,6 +156,7 @@ public class CustomerDetailsResource {
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<CustomerDetailsEntity> deleteById(@PathVariable Long id){
 		customerDetailsService.deleteCustomer(id);
+		logger.info("successfully deleted customer by id");
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -157,4 +174,5 @@ public class CustomerDetailsResource {
 //        String response = customerDetailsService.resetPassword(mobileNumber, otp, newPassword);
 //        return ResponseEntity.ok(response);
 //	}
+    
 }

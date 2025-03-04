@@ -13,7 +13,9 @@ public interface CustomerRepository extends JpaRepository<CustomerDetailsEntity,
 	
 		List<CustomerDetailsEntity> getCustomerDetailsByCustomerName(String customerName);
 		boolean existsByMobileNumber(String mobileNumber);
-//		added for spring security use
 		CustomerDetailsEntity findByCustomerName(String username);
-//		Optional<CustomerDetailsEntity> findByMobileNumber(String mobileNumber);
+		Optional<CustomerDetailsEntity> findByMobileNumber(String mobileNumber);
+		Optional<CustomerDetailsEntity> findByCustomerID(String customerID);
+		Optional<CustomerDetailsEntity> findTopByCustomerIDStartingWithOrderByCustomerIDDesc(String prefix);
+		Optional<CustomerDetailsEntity> findTopByOrderByIdDesc();
 }
